@@ -1,3 +1,4 @@
+import os
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -6,6 +7,9 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from tempfile import mkdtemp
 import boto3
+
+from_email = os.getenv('FROM_EMAIL')
+to_email = os.getenv('TO_EMAIL')
 
 
 def check_exists_by_attribute(driver, attribute):
@@ -39,6 +43,7 @@ def send_email(subject, body, sender, recipient):
     )
     print(response['MessageId'])
 
+
 def lambda_handler(event, context):
     chrome_options = ChromeOptions()
     chrome_options.add_argument("--headless=new")
@@ -66,11 +71,11 @@ def lambda_handler(event, context):
         options=chrome_options
     )
 
-    extended = ("98", "extended historic tour")
-    grand = ("100", "grand avenue tour")
+    extended = ("1012", "extended historic tour")
     onyx = ("99", "onyx lantern tour")
-    domes = ("1012", "domes and dripstones")
-    urls = [extended, grand, onyx, domes]
+    cleaveland = ("185", "cleaveland avenue tour")
+    violet = ("104", "Violet City Lantern Tour")
+    urls = [cleaveland, extended, onyx, violet]
     sent = False
     for url, name in urls:
         if sent:
@@ -86,10 +91,11 @@ def lambda_handler(event, context):
         if check_exists_by_attribute(driver, "div[data-component='RadioPillGroup']"):
             subject = "Hello from AWS Lambda"
             body = name + " is available."
-            sender = "your_verified_email@example.com"
-            recipient = "recipient_email@example.com"
+            sender = from_email
+            recipient = to_email
 
             send_email(subject, body, sender, recipient)
+            sent = True
         if not check_exists_by_attribute(driver, "div[data-component='RadioPillGroup']"):
             print(name + " is not available")
     driver.close()
