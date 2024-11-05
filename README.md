@@ -23,6 +23,10 @@ docker build --platform linux/amd64 --push -t  "$ECR_URL":latest .
 
 ### Create the lambda and configure the Lambda function
 ```
+cp terraform.tfvars.tmpl terraform.tfvars
+```
+fill in the verified to and from emails in the tfvars file
+```
 cd terraform
 terraform init
 terraform apply
