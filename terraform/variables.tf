@@ -33,6 +33,7 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
 variable "image_mutability" {
   description = "Provide image mutability"
   type        = string

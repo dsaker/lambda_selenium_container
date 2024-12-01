@@ -86,7 +86,7 @@ resource "aws_lambda_function" "lambda_selenium" {
   role          = aws_iam_role.iam_for_lambda.arn
   image_uri = data.aws_ecr_image.service_image.image_uri
   package_type = "Image"
-  timeout = 30 # seconds
+  timeout = 40 # seconds
   environment {
     variables = {
       TO_EMAIL: var.to_email
@@ -95,7 +95,7 @@ resource "aws_lambda_function" "lambda_selenium" {
   }
   ephemeral_storage { size = 5120 }
   tracing_config { mode = "PassThrough"}
-  memory_size = 2560
+  memory_size = 3000
   architectures = [ "x86_64" ]
 
 }

@@ -98,5 +98,6 @@ def lambda_handler(event, context):
             sent = True
         if not check_exists_by_attribute(driver, "div[data-component='RadioPillGroup']"):
             print(name + " is not available")
+
     driver.close()
     print("function completed")

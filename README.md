@@ -11,6 +11,7 @@
 ### Create AWS ECR Repository
 ```
 cd terraform 
+terraform init
 terraform apply -target=aws_ecr_repository.lambda_selenium_container
 ```
 The ECR Repository url will be output to the shell. Use that output to push the docker container 
@@ -28,7 +29,6 @@ cp terraform.tfvars.tmpl terraform.tfvars
 fill in the verified to and from emails in the tfvars file
 ```
 cd terraform
-terraform init
 terraform apply
 ```
 
