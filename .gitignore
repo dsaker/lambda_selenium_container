@@ -154,3 +154,5 @@ dmypy.json
 cython_debug/
 
 scratch.txt
+
+.idea
